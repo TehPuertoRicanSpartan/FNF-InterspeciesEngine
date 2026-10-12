@@ -120,6 +120,7 @@ local class = {
 }
 
 _class = function(name, attr)
+	---@class class
 	local c = deep_copy(attr)
 	_classes[c] = tostring(c)
 	c.name = name or c.name

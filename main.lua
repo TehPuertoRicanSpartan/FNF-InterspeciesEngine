@@ -1,6 +1,6 @@
 require "lib.overrides"
 
-class = require "lib.30log"
+_G.class = require "lib.30log"
 
 local funkin = require "funkin"
 

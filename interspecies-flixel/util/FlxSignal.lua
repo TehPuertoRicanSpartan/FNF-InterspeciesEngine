@@ -1,3 +1,4 @@
+---@class FlxSignal : class
 local FlxSignal = class("FlxSignal")
 
 function FlxSignal:init()

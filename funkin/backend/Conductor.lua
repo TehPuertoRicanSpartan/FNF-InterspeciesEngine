@@ -1,3 +1,4 @@
+---@class FunkinConductor : class
 local Conductor = class("Conductor")
 
 Conductor.bpm = 100

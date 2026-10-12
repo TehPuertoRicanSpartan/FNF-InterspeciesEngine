@@ -1,6 +1,7 @@
 local FlxG = require "interspecies-flixel.FlxG"
 local Paths = require "funkin.backend.util.Paths"
 
+---@class FunkinScript : class
 local Script = class("Script")
 
 function Script:init(file)

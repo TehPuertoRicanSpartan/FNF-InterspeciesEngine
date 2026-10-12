@@ -1,6 +1,7 @@
 -- this is for softcoding scripts ONLY! any hardcoded prints will be shown in LOVE2D's console
 local Paths = require "funkin.backend.util.Paths"
 
+---@class FunkinScriptConsole : class
 local ScriptConsole = class()
 
 local font = love.graphics.newFont(Paths.getFile("fonts/DOSGothic.ttf"), 16)

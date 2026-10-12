@@ -1,6 +1,7 @@
 local FlxStringUtil = require "interspecies-flixel.util.FlxStringUtil"
 local Paths = require "funkin.backend.util.Paths"
 
+---@class FunkinFPSCounter : class
 local FPSCounter = class()
 
 local format = "%dfps/%s"
@@ -21,7 +22,7 @@ function FPSCounter:reset(text)
     love.graphics.clear()
 
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.rectangle("fill", 0, 0, font:getWidth(text) + 6, font:getHeight(text) - 2)
+    love.graphics.rectangle("fill", 0, 0, font:getWidth(text) + 6, font:getHeight() - 2)
 
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(text, font, 3, 0)

@@ -2,8 +2,13 @@ local FlxBasic = require "interspecies-flixel.FlxBasic"
 local FlxPoint = require "interspecies-flixel.math.FlxPoint"
 local FlxVelocity = require "interspecies-flixel.math.FlxVelocity"
 
+---@class FlxObject : FlxBasic
 local FlxObject = FlxBasic:extend()
 
+---@param x number
+---@param y number
+---@param w number
+---@param h number
 function FlxObject:init(x, y, w, h)
     FlxObject.super.init(self)
 
@@ -19,15 +24,23 @@ function FlxObject:init(x, y, w, h)
 end
 
 function FlxObject:initVars()
+    ---@type FlxPoint
     self.scrollFactor = FlxPoint(1, 1)
 
     self:initMotionVars()
 end
 
 function FlxObject:initMotionVars()
+    ---@type FlxPoint
     self.velocity = FlxPoint()
+
+    ---@type FlxPoint
     self.acceleration = FlxPoint()
+
+    ---@type FlxPoint
     self.drag = FlxPoint()
+
+    ---@type FlxPoint
     self.maxVelocity = FlxPoint(10000, 10000)
 
     self.angularVelocity = 0

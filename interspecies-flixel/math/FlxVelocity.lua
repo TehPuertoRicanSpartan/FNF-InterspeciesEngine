@@ -1,3 +1,4 @@
+---@class FlxVelocity
 local FlxVelocity = {}
 
 function FlxVelocity.computeVelocity(velocity, acceleration, drag, max, dt)

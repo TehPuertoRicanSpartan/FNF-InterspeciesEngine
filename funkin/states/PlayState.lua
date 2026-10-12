@@ -5,6 +5,7 @@ local Script = require "funkin.backend.scripting.Script"
 local CoolUtil = require "funkin.backend.util.CoolUtil"
 local PlaceholderStrumline = require "funkin.gameplay.notes.PlaceholderStrumline"
 
+---@class FunkinPlayState : FunkinMusicBeatState
 local PlayState = MusicBeatState:extend("PlayState")
 
 local songs = {}
@@ -32,6 +33,10 @@ end
 local cameraZoom = 1
 
 function PlayState:update(dt)
+    for _,strumLine in pairs(self.strumLines) do
+        strumLine:update(dt)
+    end
+
     if love.keyboard.isDown("space") then
         FlxG.switchState(require "funkin.states.TestState")
     end

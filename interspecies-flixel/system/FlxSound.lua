@@ -1,5 +1,6 @@
 local FlxBasic = require "interspecies-flixel.FlxBasic"
 
+---@class FlxSound : FlxBasic
 local FlxSound = FlxBasic:extend("FlxSound")
 
 function FlxSound:init()

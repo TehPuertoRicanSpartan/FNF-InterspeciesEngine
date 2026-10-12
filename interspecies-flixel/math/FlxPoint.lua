@@ -1,3 +1,4 @@
+---@class FlxPoint : class
 local FlxPoint = class("FlxPoint")
 
 function FlxPoint:init(x, y)

@@ -1,6 +1,19 @@
 {
+    "Lua.runtime.version": "LuaJIT",
     "Lua.diagnostics.disable": [
-        "lowercase-global"
+        "duplicate-set-field",
+        "need-check-nil",
+        "undefined-global"
     ],
-    "Lua.runtime.version": "LuaJIT"
+    "Lua.type.weakNilCheck": true,
+    "Lua.type.weakUnionCheck": true,
+    "Lua.runtime.builtin": {
+        "utf8": "enable"
+    },
+    "Lua.runtime.special": {
+        "modRequire": "require"
+    },
+    "Lua.workspace.library": [
+        "${3rd}/love2d/library",
+    ],
 }

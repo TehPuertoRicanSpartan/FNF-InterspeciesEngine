@@ -1,11 +1,17 @@
 -- this is NOT the unused chart converter from ludum dare, it's actually being used for parsing legacy and codename charts into the engine's new charting format
+-- 👍
+
 local requireFormat = function(f) return require("funkin.backend.chartparser.formats." .. f) end
 local json = require "lib.json"
 local Paths = require "funkin.backend.util.Paths"
 
+---@type FunkinChartParserLegacy
 local Legacy = requireFormat("Legacy")
+
+---@type FunkinChartParserCodename
 local Codename = requireFormat("Codename")
 
+---@class FunkinChartParser
 local ChartParser = {}
 
 function ChartParser.parseSong(song, diff)

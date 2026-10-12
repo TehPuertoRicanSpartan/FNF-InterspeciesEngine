@@ -1,5 +1,6 @@
 local FlxBasic = require "interspecies-flixel.FlxBasic"
 
+---@class FlxGroup : FlxBasic
 local FlxGroup = FlxBasic:extend("FlxGroup")
 
 function FlxGroup:init(maxSize)

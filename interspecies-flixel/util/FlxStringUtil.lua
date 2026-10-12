@@ -1,4 +1,6 @@
 local FlxMath = require "interspecies-flixel.math.FlxMath"
+
+---@class FlxStringUtil
 local FlxStringUtil = {}
 
 function FlxStringUtil.formatTime(a, ms)

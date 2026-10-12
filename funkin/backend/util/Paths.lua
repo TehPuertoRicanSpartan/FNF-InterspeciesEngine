@@ -1,3 +1,4 @@
+---@class FunkinPaths
 local Paths = {}
 
 Paths.loadedAssets = {

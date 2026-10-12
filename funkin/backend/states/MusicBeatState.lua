@@ -1,9 +1,11 @@
 local FlxState = require "interspecies-flixel.FlxState"
 local Conductor = require "funkin.backend.conductor"
 
+---@class FunkinMusicBeatState : FlxState
 local MusicBeatState = FlxState:extend()
 
 function MusicBeatState:init()
+    ---@type FunkinConductor
     self.conductor = Conductor()
     self.curDecStep = 0
     self.curStep = 0

@@ -1,3 +1,4 @@
+---@class FunkinChartParserCodename
 local Codename = {}
 
 function Codename.parse(data, meta)

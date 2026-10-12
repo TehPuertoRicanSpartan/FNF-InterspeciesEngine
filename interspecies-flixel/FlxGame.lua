@@ -1,6 +1,8 @@
 local Gamestate = require "lib.gamestate"
+---@class FlxG
 local FlxG = require "interspecies-flixel.FlxG"
 
+---@class FlxGame : class
 local FlxGame = class("FlxGame")
 
 local function switchState(state)

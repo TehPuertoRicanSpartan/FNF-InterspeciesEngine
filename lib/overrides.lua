@@ -32,7 +32,7 @@ table.indexOf = function(t, x, from)
     return 0
 end
 
-switch = function(v, t)
+_G.switch = function(v, t)
     local f = nil
     for k, _ in pairs(t) do
         if type(k) == "table" then

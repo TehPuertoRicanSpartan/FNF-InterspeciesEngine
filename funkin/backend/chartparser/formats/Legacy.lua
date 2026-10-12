@@ -1,3 +1,4 @@
+---@class FunkinChartParserLegacy
 local Legacy = {}
 
 function Legacy.parse(data, eventData)

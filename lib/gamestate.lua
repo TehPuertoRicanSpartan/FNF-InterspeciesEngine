@@ -1,4 +1,6 @@
 -- modified for fnf interspecies engine
+---@diagnostic disable
+
 --[[
 Copyright (c) 2010-2013 Matthias Richter
 

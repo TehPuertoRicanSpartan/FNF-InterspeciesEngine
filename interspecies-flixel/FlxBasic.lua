@@ -1,3 +1,4 @@
+---@class FlxBasic : class
 local FlxBasic = class("FlxBasic")
 
 function FlxBasic:init()

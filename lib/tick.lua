@@ -1,3 +1,6 @@
+-- modified for fnf interspecies engine
+---@diagnostic disable
+
 -- tick
 -- https://github.com/bjornbytes/tick
 -- MIT License

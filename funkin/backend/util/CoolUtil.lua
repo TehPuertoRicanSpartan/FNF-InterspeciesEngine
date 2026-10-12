@@ -1,4 +1,6 @@
 local FlxMath = require "interspecies-flixel.math.FlxMath"
+
+---@class FunkinCoolUtil
 local CoolUtil = {}
 
 local exp = math.exp

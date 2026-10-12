@@ -3,7 +3,13 @@
 local FlxG = require "interspecies-flixel.FlxG"
 local FlxBasic = require "interspecies-flixel.FlxBasic"
 
+---@class FlxCamera : FlxBasic
 local FlxCamera = FlxBasic:extend("FlxCamera")
+
+FlxCamera.alpha = 1
+FlxCamera.angle = 0
+FlxCamera.antialiasing = false
+FlxCamera.bgColor = FlxG.cameras.bgColor
 
 function FlxCamera:init(x, y, w, h, zoom)
     x = x or 0
@@ -19,6 +25,19 @@ function FlxCamera:init(x, y, w, h, zoom)
     self.height = h <= 0 and FlxG.height or h
 
     self.zoom = zoom
+end
+
+
+function FlxCamera:containsRect(rect)
+    return
+end
+
+function FlxCamera:copyFrom(camera)
+    self.bounds = camera.bounds
+    self.focusObject = camera.focusObject
+    self.deadzone = camera.deadzone
+
+    return self
 end
 
 return FlxCamera

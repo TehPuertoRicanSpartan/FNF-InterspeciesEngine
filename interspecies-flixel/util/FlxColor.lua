@@ -1,5 +1,6 @@
 local bit = require "bit"
 
+---@class FlxColor
 local FlxColor = {}
 
 local colors = {
