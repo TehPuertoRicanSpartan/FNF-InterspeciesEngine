@@ -63,6 +63,55 @@ function FlxGroup:add(obj)
     return obj
 end
 
+function FlxGroup:insert(pos, obj)
+    if obj == nil then
+        return nil
+    end
+
+    if table.indexOf(self.members, obj) >= 1 then
+        return obj
+    end
+
+    if pos < self.length and self.members[pos] == nil then
+        self.members[pos] = obj
+        return obj
+    end
+
+    if self.maxSize > 0 and self.length >= self.maxSize then
+        return obj
+    end
+
+    self.members[pos] = obj
+    self.length = self.length + 1
+
+    return obj
+end
+
+function FlxGroup:remove(obj, splice)
+    splice = splice or false
+
+    if self.members == nil then
+        return nil
+    end
+
+    local index = table.indexOf(self.members, obj)
+
+    if index < 1 then
+        return nil
+    end
+
+    if splice then
+        table.remove(self.members, index)
+        self.length = self.length - 1
+    else
+        self.members[index] = nil
+    end
+
+    return obj
+end
+
+-- TODO: add `draw` when FlxCamera is fully implemented
+
 function FlxGroup:getFirstNil()
     for i = 1, self.length do
         if self.members[i] == nil then

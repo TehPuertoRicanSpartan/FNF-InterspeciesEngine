@@ -1,10 +1,8 @@
 local MusicBeatState = require "funkin.backend.states.MusicBeatState"
 local FlxG = require "interspecies-flixel.FlxG"
-local ChartParser = require "funkin.backend.chartparser.ChartParser"
 local Paths = require "funkin.backend.util.Paths"
 local Script = require "funkin.backend.scripting.Script"
 local CoolUtil = require "funkin.backend.util.CoolUtil"
-local FlxMath = require "interspecies-flixel.math.FlxMath"
 local PlaceholderStrumline = require "funkin.gameplay.notes.PlaceholderStrumline"
 
 local PlayState = MusicBeatState:extend("PlayState")
@@ -17,22 +15,18 @@ function PlayState:init()
     self.conductor.songPosition = self.conductor.crochet * -5
 end
 
-local script = Script(Paths.getFile("scripts/test.lua"))
-
-local opponentStrumline
-local playerStrumline
-
 function PlayState:create()
-    script:call("create")
+    self.script = Script(Paths.getFile("scripts/test.lua"))
+    self.script:call("create")
 
-    opponentStrumline = PlaceholderStrumline(PlayState.SONG, "opponent")
-    playerStrumline = PlaceholderStrumline(PlayState.SONG, "player")
+    self.opponentStrumline = PlaceholderStrumline(PlayState.SONG, "opponent")
+    self.playerStrumline = PlaceholderStrumline(PlayState.SONG, "player")
 
-    rawset(opponentStrumline, "x", 96)
-    rawset(playerStrumline, "x", (FlxG.width / 2) + 96)
+    self.opponentStrumline.x = 96
+    self.playerStrumline.x = (FlxG.width / 2) + 96
 
     PlayState.super.create()
-    script:call("createPost")
+    self.script:call("createPost")
 end
 
 local cameraZoom = 1
@@ -63,16 +57,16 @@ function PlayState:update(dt)
         self.conductor.timeSignature = self.currentChange.timeSignature
     end
 
-    script:call("update", dt)
+    self.script:call("update", dt)
 
-    rawset(opponentStrumline, "songPosition", self.conductor.songPosition)
-    rawset(playerStrumline, "songPosition", self.conductor.songPosition)
+    self.opponentStrumline.songPosition = self.conductor.songPosition
+    self.playerStrumline.songPosition = self.conductor.songPosition
 
     cameraZoom = CoolUtil.lerpFPS(1, cameraZoom, 0.95, 60, dt)
 
     PlayState.super.update(self, dt)
 
-    script:call("updatePost", dt)
+    self.script:call("updatePost", dt)
 end
 
 function PlayState:draw()
@@ -82,14 +76,14 @@ function PlayState:draw()
     love.graphics.translate(-(FlxG.width / 2) * (cameraZoom - 1), -(FlxG.height / 2) * (cameraZoom - 1))
     love.graphics.push()
         love.graphics.setColor(1, 0, 1)
-        opponentStrumline:draw()
+        self.opponentStrumline:draw()
         love.graphics.setColor(0, 1, 1)
-        playerStrumline:draw()
+        self.playerStrumline:draw()
     love.graphics.pop()
 end
 
 function PlayState:beatHit()
-    script:call("beatHit", self.curBeat)
+    self.script:call("beatHit", self.curBeat)
 
     if self.curBeat < 0 then
         -- handle countdown
@@ -100,7 +94,7 @@ function PlayState:beatHit()
         cameraZoom = cameraZoom + 0.03
     end
 
-    script:call("beatHitPost", self.curBeat)
+    self.script:call("beatHitPost", self.curBeat)
 end
 
 return PlayState

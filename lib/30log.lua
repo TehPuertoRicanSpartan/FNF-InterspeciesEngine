@@ -61,16 +61,38 @@ local function instantiate(call_init, self, ...)
 	return instance
 end
 
+local function getter_index(self, k)
+	local c = getmetatable(self)
+
+	if type(c[k]) == "function" then return c[k] end
+	local get = c["get_" .. k]
+	if get ~= nil then
+		return get(c)
+	end
+	return rawget(c, k) or c
+end
+
+local function setter_newindex(self, k, v)
+	local c = getmetatable(self)
+
+	local set = c["set_" .. k]
+	if set ~= nil then
+		return set(c, v)
+	end
+	return rawset(c, k, v)
+end
+
 local function extend(self, name, extra_params)
 	assert_call_from_class(self, 'extend(...)')
 	local heir = {}
 	_classes[heir] = tostring(heir)
 	self.__subclasses[heir] = true
 	deep_copy(extra_params, deep_copy(self, heir))
-	heir.name    = extra_params and extra_params.name or name
-	heir.__index = heir
-	heir.super   = self
-	heir.mixins = {}
+	heir.name       = extra_params and extra_params.name or name
+	heir.__index    = getter_index
+	heir.__newindex = setter_newindex
+	heir.super      = self
+	heir.mixins     = {}
 	return setmetatable(heir,self)
 end
 
@@ -107,18 +129,8 @@ _class = function(name, attr)
 	c.create = bind(instantiate, false)
 	c.extend = extend
 
-	c.__index = function(_, k)
-        if k then
-            local get = rawget(c, "get_" .. k)
-		    return (get ~= nil and type(get) == "function") and get(c) or rawget(c, k)
-        else
-            return c
-        end
-	end
-	c.__newindex = function(_, k, v)
-		local set = rawget(c, "set_" .. k)
-		return (set ~= nil and type(set) == "function") and set(c, v) or rawset(c, k, v)
-	end
+	c.__index = getter_index
+	c.__newindex = setter_newindex
 
 	c.mixins = setmetatable({},{__mode = 'k'})
 	c.__instances = setmetatable({},{__mode = 'k'})
