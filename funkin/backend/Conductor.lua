@@ -51,14 +51,14 @@ end
 function Conductor:set_bpm(v)
     if type(v) ~= "number" then return end
 
-    self.bpm = v
+    rawset(self, "bpm", v)
     self:updateValues()
 end
 
 function Conductor:set_timeSignature(v)
     if type(v) ~= "table" then return end
 
-    self.timeSignature = v
+    rawset(self, "timeSignature", v)
     self:updateValues()
 end
 

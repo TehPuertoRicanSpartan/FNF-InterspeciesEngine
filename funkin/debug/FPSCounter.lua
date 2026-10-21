@@ -32,7 +32,7 @@ function FPSCounter:set_text(v)
     if v ~= self.text then
         self:reset(v)
     end
-    self.text = v
+    rawset(self, "text", v)
     return v
 end
 

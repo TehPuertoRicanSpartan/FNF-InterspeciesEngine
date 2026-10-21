@@ -64,12 +64,11 @@ end
 local function getter_index(self, k)
 	local c = getmetatable(self)
 
-	if type(c[k]) == "function" then return c[k] end
 	local get = c["get_" .. k]
 	if get ~= nil then
-		return get(c)
+		return get(self)
 	end
-	return rawget(c, k) or c
+	return c[k]
 end
 
 local function setter_newindex(self, k, v)
@@ -77,9 +76,9 @@ local function setter_newindex(self, k, v)
 
 	local set = c["set_" .. k]
 	if set ~= nil then
-		return set(c, v)
+		return set(self, v)
 	end
-	return rawset(c, k, v)
+	return rawset(self, k, v)
 end
 
 local function extend(self, name, extra_params)
