@@ -36,26 +36,15 @@ function PlayState:update(dt)
         FlxG.switchState(require "funkin.states.TestState")
     end
 
-    if self.conductor.songPosition < 0 then
-        self.conductor.songPosition = self.conductor.songPosition - self.conductor.offset
-        self.conductor.songPosition = self.conductor.songPosition + (dt * 1000)
-        self.conductor.songPosition = self.conductor.songPosition + self.conductor.offset
-    else
+    if self.conductor.songPosition >= self.conductor.offset then
         for _, v in pairs({"Inst", "Voices"}) do
             if songs[v] == nil then
                 songs[v] = love.audio.newSource("assets/songs/" .. (PlayState.SONG.meta.title:lower()):gsub(" ", "-") .. "/" .. v .. ".ogg", "stream")
                 songs[v]:play()
             end
         end
-        self.conductor.songPosition = (songs["Inst"]:tell() * 1000) + self.conductor.offset
     end
-
-    if self.currentChange.bpm > 0 then
-        self.conductor.bpm = self.currentChange.bpm
-    end
-    if self.currentChange.sig ~= nil then
-        self.conductor.timeSignature = self.currentChange.timeSignature
-    end
+    self.conductor.songPosition = self.conductor.songPosition + (dt * 1000)
 
     self.script:call("update", dt)
 
@@ -82,6 +71,16 @@ function PlayState:draw()
     love.graphics.pop()
 end
 
+function PlayState:stepHit()
+    self.script:call("stepHit", self.curStep)
+
+    if songs["Voices"] ~= nil and math.abs((songs["Voices"]:tell() * 1000) - (self.conductor.songPosition - self.conductor.offset)) > 20 then
+        self:resyncVocals()
+    end
+
+    self.script:call("stepHitPost", self.curStep)
+end
+
 function PlayState:beatHit()
     self.script:call("beatHit", self.curBeat)
 
@@ -95,6 +94,13 @@ function PlayState:beatHit()
     end
 
     self.script:call("beatHitPost", self.curBeat)
+end
+
+function PlayState:resyncVocals()
+    if songs["Inst"] ~= nil and songs["Voices"] ~= nil then
+        self.conductor.songPosition = (songs["Inst"]:tell() * 1000) + self.conductor.offset
+        songs["Voices"]:seek(songs["Inst"]:tell())
+    end
 end
 
 return PlayState

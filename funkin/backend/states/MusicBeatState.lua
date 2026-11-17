@@ -18,6 +18,16 @@ function MusicBeatState:update(dt)
     local oldBeat = self.curBeat
     local oldSection = self.curSection
 
+    if self.currentChange.bpm > 0 then
+        self.conductor.bpm = self.currentChange.bpm
+    end
+    if self.currentChange.sig ~= nil then
+        self.conductor.timeSignature = self.currentChange.timeSignature
+    end
+
+    -- Conductor's set_bpm and set_timeSignature doesn't work for some reason
+    self.conductor:updateValues()
+
     self:updateStep()
     self:updateBeat()
     self:updateSection()
@@ -45,13 +55,13 @@ function MusicBeatState:updateStep()
     self.curStep = floor(self.curDecStep)
 end
 
+local lastChange = {
+    timeSignature = {0, 0},
+    stepTime = 0,
+    songTime = 0,
+    bpm = 0
+}
 function MusicBeatState:get_currentChange()
-    local lastChange = {
-        timeSignature = {0, 0},
-        stepTime = 0,
-        songTime = 0,
-        bpm = 0
-    }
     for _, change in pairs(self.conductor.bpmChangeMap) do
         if self.conductor.songPosition >= change.songTime then
             lastChange = change

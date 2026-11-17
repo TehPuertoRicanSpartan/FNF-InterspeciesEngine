@@ -21,19 +21,6 @@ function Script:init(file)
         return Script(Paths.getFile("scripts/classes/" .. filename .. ".lua")).chunk()
     end
 
-    -- flixel classes
-    self.env.FlxG = require "interspecies-flixel.FlxG"
-
-    self.env.FlxGroup = require "interspecies-flixel.group.FlxGroup"
-
-    self.env.FlxMath = require "interspecies-flixel.math.FlxMath"
-    self.env.FlxPoint = require "interspecies-flixel.math.FlxPoint"
-    self.env.FlxRect = require "interspecies-flixel.math.FlxRect"
-
-    self.env.FlxStringUtil = require "interspecies-flixel.util.FlxStringUtil"
-
-    -- funkin' classes
-
     local chunk = love.filesystem.load(file)
     setfenv(chunk, self.env)
     self.chunk = chunk
@@ -46,12 +33,15 @@ function Script:set(var, val)
 end
 
 function Script:call(f, ...)
-    -- todo: find a way to return what the script wants to return
     if self.env[f] and type(self.env[f]) == "function" then
         local s, e = pcall(self.env[f], ...)
         if not s then
             print(e)
             return
+        end
+
+        if e ~= nil then
+            return e
         end
     end
 end

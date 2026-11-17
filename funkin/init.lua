@@ -6,6 +6,8 @@ local PlayState = require "funkin.states.PlayState"
 local ChartParser = require "funkin.backend.chartparser.ChartParser"
 
 local funkin = {}
+
+_G.Flags = require "funkin.backend.Flags"
 funkin.fpsCounter = FPSCounter()
 
 local game

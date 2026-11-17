@@ -13,6 +13,7 @@ end
 
 function FPSCounter:update(dt)
     self.text = format:format(love.timer.getFPS(), FlxStringUtil.formatBytes(collectgarbage("count") * 1024))
+    self:reset(self.text)
 end
 
 function FPSCounter:reset(text)

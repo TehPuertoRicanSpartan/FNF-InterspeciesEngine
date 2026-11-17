@@ -53,6 +53,7 @@ function Conductor:set_bpm(v)
 
     rawset(self, "bpm", v)
     self:updateValues()
+    return v
 end
 
 function Conductor:set_timeSignature(v)
@@ -60,6 +61,7 @@ function Conductor:set_timeSignature(v)
 
     rawset(self, "timeSignature", v)
     self:updateValues()
+    return v
 end
 
 function Conductor:set_crochet() end
